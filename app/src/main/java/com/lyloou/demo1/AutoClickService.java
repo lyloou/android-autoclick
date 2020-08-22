@@ -2,6 +2,7 @@ package com.lyloou.demo1;
 
 import android.accessibilityservice.AccessibilityService;
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
@@ -10,6 +11,10 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import static com.lyloou.demo1.Const.DEFAULT_CLICKED_ID;
+import static com.lyloou.demo1.Const.KEY_VIEW_ID;
+import static com.lyloou.demo1.Const.SP_NAME;
+
 /**
  * @author gaok
  * @description 自动点击AccessibilityService版
@@ -17,7 +22,6 @@ import java.util.List;
  */
 public class AutoClickService extends AccessibilityService {
     private static final String TAG = "TTAG";
-    public static final String CAN_CLICKED_ID = "com.lagou.education:id/iv_resume_video";
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
@@ -40,10 +44,12 @@ public class AutoClickService extends AccessibilityService {
             return;
         }
 
-        List<AccessibilityNodeInfo> accessibilityNodeInfosByViewId = rootInfo.findAccessibilityNodeInfosByViewId(CAN_CLICKED_ID);
+        SharedPreferences sp = getSharedPreferences(SP_NAME, MODE_PRIVATE);
+        String viewId = sp.getString(KEY_VIEW_ID, DEFAULT_CLICKED_ID);
+        List<AccessibilityNodeInfo> accessibilityNodeInfosByViewId = rootInfo.findAccessibilityNodeInfosByViewId(viewId);
         if (!accessibilityNodeInfosByViewId.isEmpty()) {
-            Log.i(TAG, "---->" + accessibilityNodeInfosByViewId.size());
             performClick(accessibilityNodeInfosByViewId.get(0));
+            ztLog("自动点击了", true);
         }
 
     }
