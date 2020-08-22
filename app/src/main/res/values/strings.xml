@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AutoClickDemo</string>
+    <string name="app_name">AutoClickApp</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="description">自动点击</string>

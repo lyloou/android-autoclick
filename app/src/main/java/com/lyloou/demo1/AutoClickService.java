@@ -17,15 +17,14 @@ import java.util.List;
  */
 public class AutoClickService extends AccessibilityService {
     private static final String TAG = "TTAG";
+    public static final String CAN_CLICKED_ID = "com.lagou.education:id/iv_resume_video";
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
 
         try {
             AccessibilityNodeInfo rootInfo = getRootInActiveWindow();
-            if (rootInfo != null) {
-                DFS(rootInfo);
-            }
+            monitor(rootInfo);
         } catch (Exception e) {
             ztLog("Exception:" + e.getMessage(), true);
         }
@@ -36,11 +35,12 @@ public class AutoClickService extends AccessibilityService {
     }
 
     @SuppressLint("NewApi")
-    private void DFS(AccessibilityNodeInfo rootInfo) {
+    private void monitor(AccessibilityNodeInfo rootInfo) {
         if (rootInfo == null || TextUtils.isEmpty(rootInfo.getClassName())) {
             return;
         }
-        List<AccessibilityNodeInfo> accessibilityNodeInfosByViewId = rootInfo.findAccessibilityNodeInfosByViewId("com.lagou.education:id/iv_resume_video");
+
+        List<AccessibilityNodeInfo> accessibilityNodeInfosByViewId = rootInfo.findAccessibilityNodeInfosByViewId(CAN_CLICKED_ID);
         if (!accessibilityNodeInfosByViewId.isEmpty()) {
             Log.i(TAG, "---->" + accessibilityNodeInfosByViewId.size());
             performClick(accessibilityNodeInfosByViewId.get(0));
