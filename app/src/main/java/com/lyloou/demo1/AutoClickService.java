@@ -20,7 +20,6 @@ public class AutoClickService extends AccessibilityService {
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
-        ztLog("===start search===" + event.getPackageName().toString());
 
         try {
             AccessibilityNodeInfo rootInfo = getRootInActiveWindow();
@@ -36,9 +35,6 @@ public class AutoClickService extends AccessibilityService {
     public void onInterrupt() {
     }
 
-    /**
-     * 深度优先遍历寻找目标节点
-     */
     @SuppressLint("NewApi")
     private void DFS(AccessibilityNodeInfo rootInfo) {
         if (rootInfo == null || TextUtils.isEmpty(rootInfo.getClassName())) {
